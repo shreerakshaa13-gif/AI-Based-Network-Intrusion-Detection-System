@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI Network Intrusion Detection System Dashboard">
+    <title>AI-NIDS | Security Operations Center</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=7">
+</head>
+
+<body>
+<div class="dashboard">
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="brand">
+            <div class="logo">🛡</div>
+            <div class="brand-text">
+                <h1>AI Network Intrusion Detection System</h1>
+                <p class="subtitle">Intelligent Network Security Monitoring &amp; Threat Detection</p>
+            </div>
+        </div>
+        <div class="system-status" id="status">● SYSTEM CONNECTING...</div>
+    </header>
+
+    <!-- LIVE MONITORING -->
+    <section class="card live-monitoring">
+        <div class="section-heading">
+            <div>
+                <h2>Live Monitoring</h2>
+                <p class="subtitle">Real-time network security monitoring</p>
+            </div>
+            <span class="live-badge">● LIVE</span>
+        </div>
+        <div class="live-time" id="live-time">--:--:--</div>
+        <div class="live-date" id="live-date">Loading system time...</div>
+    </section>
+
+    <!-- SUMMARY METRICS -->
+    <section class="summary-grid">
+
+        <div class="card metric-card normal-card">
+            <div class="metric-top">
+                <div>
+                    <div class="metric-title">Normal Traffic</div>
+                    <div class="metric-category">SAFE ACTIVITY</div>
+                </div>
+                <div class="metric-icon normal-icon">✓</div>
+            </div>
+            <div class="metric-number normal-number" id="normal-count">0</div>
+            <div class="metric-description">Normal network activity</div>
+            <div class="metric-status normal-status">
+                <span class="status-dot"></span> MONITORING
+            </div>
+        </div>
+
+        <div class="card metric-card suspicious-card">
+            <div class="metric-top">
+                <div>
+                    <div class="metric-title">Suspicious Traffic</div>
+                    <div class="metric-category">REQUIRES REVIEW</div>
+                </div>
+                <div class="metric-icon suspicious-icon">!</div>
+            </div>
+            <div class="metric-number suspicious-number" id="suspicious-count">0</div>
+            <div class="metric-description">Requires further inspection</div>
+            <div class="metric-status suspicious-status">
+                <span class="status-dot"></span> INVESTIGATION
+            </div>
+        </div>
+
+        <!-- CLICK THIS CARD TO OPEN ATTACK HISTORY -->
+        <div class="card metric-card attack-card"
+             id="attack-classifications-card"
+             role="button"
+             tabindex="0"
+             aria-label="Open attack history"
+             title="Click to view attack history">
+
+            <div class="metric-top">
+                <div>
+                    <div class="metric-title">AI Attack Classifications</div>
+                    <div class="metric-category">POTENTIAL THREATS</div>
+                </div>
+                <div class="metric-icon attack-icon">!</div>
+            </div>
+            <div class="metric-number attack-number" id="attack-count">0</div>
+            <div class="metric-description">Click to view all recorded attacks</div>
+            <div class="metric-status attack-status">
+                <span class="status-dot"></span> VIEW ATTACK HISTORY
+            </div>
+        </div>
+
+        <div class="card metric-card engine-card">
+            <div class="metric-top">
+                <div>
+                    <div class="metric-title">Detection Engine</div>
+                    <div class="metric-category">MULTI-MODEL AI</div>
+                </div>
+                <div class="metric-icon engine-icon">⚙</div>
+            </div>
+            <div class="metric-number engine-number">AI</div>
+            <div class="metric-description">Isolation Forest + Random Forest + XGBoost</div>
+            <div class="metric-status engine-status">
+                <span class="status-dot"></span> ENGINE ONLINE
+            </div>
+        </div>
+    </section>
+
+    <!-- AI DETECTION PIPELINE -->
+    <section class="card section">
+        <div class="section-heading">
+            <div>
+                <h2>AI Detection Pipeline</h2>
+                <p class="subtitle">Multi-stage network intrusion detection workflow</p>
+            </div>
+            <span class="active-badge">ACTIVE</span>
+        </div>
+
+        <div class="pipeline">
+            <div class="pipeline-step"><div class="pipeline-icon">🌐</div><span>Network Traffic</span></div>
+            <div class="pipeline-arrow">→</div>
+            <div class="pipeline-step"><div class="pipeline-icon">🔗</div><span>Flow Generation</span></div>
+            <div class="pipeline-arrow">→</div>
+            <div class="pipeline-step"><div class="pipeline-icon">📊</div><span>Feature Extraction</span></div>
+            <div class="pipeline-arrow">→</div>
+            <div class="pipeline-step"><div class="pipeline-icon">🔎</div><span>Isolation Forest</span></div>
+            <div class="pipeline-arrow">→</div>
+            <div class="pipeline-step"><div class="pipeline-icon">🌲</div><span>Random Forest</span></div>
+            <div class="pipeline-arrow">→</div>
+            <div class="pipeline-step"><div class="pipeline-icon">⚡</div><span>XGBoost</span></div>
+            <div class="pipeline-arrow">→</div>
+            <div class="pipeline-step"><div class="pipeline-icon">🧠</div><span>SHAP</span></div>
+        </div>
+    </section>
+
+    <!-- CURRENT DETECTION + SHAP -->
+    <section class="two-column">
+        <div class="card detection-card" id="detection-card">
+            <div class="section-heading">
+                <div>
+                    <h2>Current Detection</h2>
+                    <p class="subtitle">Latest AI security classification</p>
+                </div>
+                <span class="live-badge">REAL-TIME</span>
+            </div>
+            <div id="attack-details">
+                <div class="detection-status status-normal">● NETWORK SECURE</div>
+                <p class="subtitle">Waiting for network activity...</p>
+            </div>
+        </div>
+
+        <div class="card shap-card">
+            <div class="section-heading">
+                <div>
+                    <h2>AI Explanation</h2>
+                    <p class="subtitle">Explainable AI using SHAP</p>
+                </div>
+                <span class="active-badge">SHAP</span>
+            </div>
+            <div id="shap-explanation">
+                <div class="shap-empty">
+                    <div class="shap-empty-icon">🧠</div>
+                    <p>No AI explanation available</p>
+                    <span>SHAP results appear after an attack classification.</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LIVE NETWORK ACTIVITY -->
+    <section class="card section table-card">
+        <div class="section-heading">
+            <div>
+                <h2>Live Network Activity</h2>
+                <p class="subtitle">Most recent network flows detected by the sensor</p>
+            </div>
+            <span class="live-badge">● STREAMING</span>
+        </div>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Source IP</th>
+                        <th>Destination IP</th>
+                        <th>Port</th>
+                        <th>Protocol</th>
+                        <th>Packets</th>
+                        <th>Bytes</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="live-network-activity">
+                    <tr><td colspan="8">Waiting for network traffic...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- RECENT DETECTIONS -->
+    <section class="card section table-card">
+        <div class="section-heading">
+            <div>
+                <h2>Recent Detections</h2>
+                <p class="subtitle">Latest AI security events</p>
+            </div>
+            <span class="active-badge">AUTO-REFRESH</span>
+        </div>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Source IP</th>
+                        <th>Destination IP</th>
+                        <th>Status</th>
+                        <th>Attack Class</th>
+                    </tr>
+                </thead>
+                <tbody id="detections">
+                    <tr><td colspan="5">Loading detections...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <strong>AI-NIDS</strong>
+        <span>Intelligent Network Security Monitoring</span>
+        <br>
+        <span>Isolation Forest</span>
+        <span>•</span>
+        <span>Random Forest</span>
+        <span>•</span>
+        <span>XGBoost</span>
+        <span>•</span>
+        <span>SHAP</span>
+    </footer>
+</div>
+
+<!-- ATTACK HISTORY MODAL -->
+<div id="attack-history-modal" hidden>
+    <section class="attack-history-panel" role="dialog" aria-modal="true"
+             aria-labelledby="attack-history-title">
+
+        <div class="attack-history-header">
+            <div>
+                <h2 id="attack-history-title">Attack History</h2>
+                <p><span id="attack-history-total">0</span> recorded attack entries</p>
+            </div>
+            <button id="close-attack-history" type="button"
+                    aria-label="Close attack history">×</button>
+        </div>
+
+        <input id="attack-history-search" type="search"
+               placeholder="Search IP address or attack class..."
+               aria-label="Search attack history">
+
+        <p id="attack-history-updated">Loading history...</p>
+
+        <div class="attack-history-table-wrapper">
+            <table class="attack-history-table">
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Source IP</th>
+                        <th>Destination IP</th>
+                        <th>Attack Class</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="attack-history-rows">
+                    <tr><td colspan="5">Loading attack history...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>
+
+<style>
+.attack-card {
+    cursor: pointer;
+}
+.attack-card:focus-visible {
+    outline: 3px solid #6aa9ff;
+    outline-offset: 3px;
+}
+#attack-history-modal[hidden] {
+    display: none !important;
+}
+#attack-history-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.attack-history-panel {
+    background: #101827;
+    color: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 1200px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+.attack-history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+.attack-history-header h2 {
+    margin: 0 0 8px;
+}
+#close-attack-history {
+    font-size: 28px;
+    cursor: pointer;
+    background: transparent;
+    color: inherit;
+    border: 0;
+}
+#attack-history-search {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 6px;
+}
+.attack-history-table-wrapper {
+    overflow: auto;
+}
+.attack-history-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.attack-history-table th,
+.attack-history-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #39465a;
+    white-space: nowrap;
+}
+.attack-history-table th {
+    position: sticky;
+    top: 0;
+    background: #182337;
+}
+@media (max-width: 600px) {
+    #attack-history-modal {
+        padding: 8px;
+    }
+    .attack-history-panel {
+        padding: 12px;
+    }
+}
+</style>
+
+<script src="{{ url_for('static', filename='js/dashboard.js') }}?v=7"></script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+# Python virtual environment
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Secrets
+.env
+.env.*
+
+# Generated logs
+logs/*.csv
+logs/*.json
+
+# Network capture files
+*.pcap
+*.pcapng
+
+# Large dataset files
+*.parquet
+
+# Editor and temporary files
+.vscode/
+.DS_Store
+
+# Training datasets (1.8 GB)
+data/
+
+# Generated detection and explanation logs
+logs/*.csv
+logs/*.json
+logs/__pycache__/
+
